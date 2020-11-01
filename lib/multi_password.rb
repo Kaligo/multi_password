@@ -1,6 +1,10 @@
 require "multi_password/version"
+require 'dry/configurable'
 
 module MultiPassword
-  class Error < StandardError; end
-  # Your code goes here...
+  extend Dry::Configurable
+
+  setting :default_algorithm
+  setting :default_options, {}
+
 end
