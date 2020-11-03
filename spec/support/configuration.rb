@@ -1,5 +1,5 @@
 require "dry/configurable/test_interface"
 
-module MultiPassword
+class MultiPassword
   enable_test_interface
 end
