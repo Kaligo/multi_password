@@ -9,3 +9,4 @@ gem "rspec", "~> 3.0"
 gem 'argon2'
 gem 'bcrypt'
 gem 'scrypt'
+gem 'byebug'

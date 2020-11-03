@@ -9,11 +9,11 @@ class MultiPassword
       register :scrypt
 
       def create(password, options = {})
-        SCrypt::Password.create(password, options).to_s
+        ::SCrypt::Password.create(password, options).to_s
       end
 
       def verify(password, encrypted_password)
-        SCrypt::Password.new(encrypted_password) == password
+        ::SCrypt::Password.new(encrypted_password) == password
       end
     end
   end

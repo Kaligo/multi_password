@@ -9,11 +9,11 @@ class MultiPassword
       register :bcrypt
 
       def create(password, options = {})
-        BCrypt::Password.create(password, options).to_s
+        ::BCrypt::Password.create(password, options).to_s
       end
 
       def verify(password, encrypted_password)
-        BCrypt::Password.new(encrypted_password) == password
+        ::BCrypt::Password.new(encrypted_password) == password
       end
     end
   end

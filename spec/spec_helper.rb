@@ -1,4 +1,5 @@
 require "bundler/setup"
+require 'byebug'
 require "multi_password"
 require_relative 'support/configuration'
 

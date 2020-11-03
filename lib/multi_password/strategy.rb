@@ -3,8 +3,10 @@ require_relative 'errors'
 class MultiPassword
   module Strategy
     def self.included(klass)
-      klass.define_method :register do |algorithm|
-        MultiPassword.register(algorithm, klass)
+      klass.class_eval do
+        def self.register(algorithm)
+          MultiPassword.register(algorithm, self)
+        end
       end
     end
 
