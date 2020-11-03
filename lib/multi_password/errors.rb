@@ -6,4 +6,10 @@ class MultiPassword
       super("subclass does not implement ##{method_name}", *args, **options)
     end
   end
+
+  class AlgorithmNotRegistered < Error
+    def initialize(algorithm)
+      super("Algorithm #{algorithm} is not registered. Try requiring 'multi_password/strategies/#{algorithm}'.")
+    end
+  end
 end

@@ -1,4 +1,6 @@
 require "multi_password/version"
+require 'multi_password/errors'
+require 'multi_password/strategy'
 require 'dry/configurable'
 require 'concurrent/hash'
 
@@ -11,20 +13,20 @@ class MultiPassword
 
   def self.register(algorithm, klass)
     if config.registers[algorithm]
-
       Warning.warn <<-MSG
 [MultiPassword] #{algorithm} is already registered by #{config.registers[algorithm]} but is overwritten by #{klass} in:
       #{caller.first}
       MSG
-
-    else
-      config.registers[algorithm] = klass
     end
+
+    config.registers[algorithm] = klass
   end
 
   def initialize(algorithm: config.default_algorithm, options: config.default_options)
-    @strategy = config.registers.fetch(algorithm)
+    @strategy = config.registers.fetch(algorithm).new
     @options = options
+  rescue KeyError
+    raise AlgorithmNotRegistered.new(algorithm)
   end
 
   def create(password)
