@@ -4,17 +4,17 @@ Gem::Specification.new do |spec|
   spec.name          = "multi_password"
   spec.version       = MultiPassword::VERSION
   spec.authors       = ["Hieu Nguyen"]
-  spec.email         = ["hieuk09@gmail.com"]
+  spec.email         = ["hieu.nguyen@ascendaloyalty.com"]
 
   spec.summary       = %q{Generic swappable password algorithm handler}
   spec.description   = %q{Provide a generic interface that allows application to easily switch password algorithm}
-  spec.homepage      = "https://github.com/hieuk09/multi_password"
+  spec.homepage      = "https://github.com/kaligo/multi_password"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/hieuk09/multi_password"
-  spec.metadata["changelog_uri"] = "https://github.com/hieuk09/multi_password/blob/master/CHANGELOG"
+  spec.metadata["source_code_uri"] = "https://github.com/kaligo/multi_password"
+  spec.metadata["changelog_uri"] = "https://github.com/kaligo/multi_password/blob/master/CHANGELOG"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
