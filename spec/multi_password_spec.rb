@@ -1,3 +1,5 @@
+require 'multi_password/strategies/bcrypt'
+
 RSpec.describe MultiPassword do
   after { described_class.reset_config }
 
@@ -22,11 +24,13 @@ RSpec.describe MultiPassword do
     let(:klass) { Class.new }
     let(:algorithm) { :dummy }
 
+    after { described_class.unregister(algorithm) }
+
     context 'when algorithm is not registered yet' do
       it 'sets correct value' do
         expect {
           described_class.register(algorithm, klass)
-        }.to change { described_class.config.registers[algorithm] }
+        }.to change { described_class.registers[algorithm] }
           .from(nil).to(klass)
       end
     end
@@ -38,35 +42,34 @@ RSpec.describe MultiPassword do
         expect {
           described_class.register(algorithm, Class.new)
           described_class.register(algorithm, klass)
-        }.to change { described_class.config.registers[algorithm] }
+        }.to change { described_class.registers[algorithm] }
           .from(nil).to(klass)
       end
     end
   end
 
   describe '#create' do
-    let(:algorithm) { :bcrypt }
     let(:options) { { cost: 12 } }
     let(:manager) { described_class.new(algorithm: algorithm, options: options) }
     let(:password) { 'password' }
     subject { manager.create(password) }
 
     context 'when algorithm is not registered' do
+      let(:algorithm) { :dummy }
+
       it 'raises error' do
         expect {
           subject
-        }.to raise_error(described_class::AlgorithmNotRegistered, /Algorithm bcrypt is not registered. Try requiring 'multi_password\/strategies\/bcrypt'\./)
+        }.to raise_error(described_class::AlgorithmNotRegistered, /Algorithm dummy is not registered. Try requiring 'multi_password\/strategies\/dummy'\./)
       end
     end
 
     context 'when algorithm is registered' do
-      let(:strategy) { Class.new.include(described_class::Strategy) }
+      let(:algorithm) { :bcrypt }
       let(:encrypted_password) { 'encrypted_password' }
 
       before do
-        described_class.register(algorithm, strategy)
-
-        expect_any_instance_of(strategy).to receive(:create)
+        expect_any_instance_of(described_class::Strategies::BCrypt).to receive(:create)
           .with(password, options).and_return(encrypted_password)
       end
 
@@ -75,7 +78,6 @@ RSpec.describe MultiPassword do
   end
 
   describe '#verify' do
-    let(:algorithm) { :bcrypt }
     let(:options) { { cost: 12 } }
     let(:manager) { described_class.new(algorithm: algorithm, options: options) }
     let(:password) { 'password' }
@@ -83,20 +85,20 @@ RSpec.describe MultiPassword do
     subject { manager.verify(password, encrypted_password) }
 
     context 'when algorithm is not registered' do
+      let(:algorithm) { :dummy }
+
       it 'raises error' do
         expect {
           subject
-        }.to raise_error(described_class::AlgorithmNotRegistered, /Algorithm bcrypt is not registered. Try requiring 'multi_password\/strategies\/bcrypt'\./)
+        }.to raise_error(described_class::AlgorithmNotRegistered, /Algorithm dummy is not registered. Try requiring 'multi_password\/strategies\/dummy'\./)
       end
     end
 
     context 'when algorithm is registered' do
-      let(:strategy) { Class.new.include(described_class::Strategy) }
+      let(:algorithm) { :bcrypt }
 
       before do
-        described_class.register(algorithm, strategy)
-
-        expect_any_instance_of(strategy).to receive(:verify)
+        expect_any_instance_of(described_class::Strategies::BCrypt).to receive(:verify)
           .with(password, encrypted_password).and_return(true)
       end
 

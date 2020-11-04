@@ -9,21 +9,30 @@ class MultiPassword
 
   setting :default_algorithm
   setting :default_options, {}
-  setting :registers, Concurrent::Hash.new
+
+  @registers = Concurrent::Hash.new
+
+  def self.registers
+    @registers
+  end
 
   def self.register(algorithm, klass)
-    if config.registers[algorithm]
+    if registers[algorithm]
       Warning.warn <<-MSG
-[MultiPassword] #{algorithm} is already registered by #{config.registers[algorithm]} but is overwritten by #{klass} in:
+[MultiPassword] #{algorithm} is already registered by #{registers[algorithm]} but is overwritten by #{klass} in:
       #{caller.first}
       MSG
     end
 
-    config.registers[algorithm] = klass
+    registers[algorithm] = klass
+  end
+
+  def self.unregister(algorithm)
+    registers.delete(algorithm)
   end
 
   def initialize(algorithm: config.default_algorithm, options: config.default_options)
-    @strategy = config.registers.fetch(algorithm).new
+    @strategy = registers.fetch(algorithm).new
     @options = options
   rescue KeyError
     raise AlgorithmNotRegistered.new(algorithm)
@@ -43,5 +52,9 @@ class MultiPassword
 
   def config
     self.class.config
+  end
+
+  def registers
+    self.class.registers
   end
 end
