@@ -48,6 +48,22 @@ RSpec.describe MultiPassword do
     end
   end
 
+  describe '#initialize' do
+    let(:strategy) { MultiPassword::Strategies::BCrypt.new }
+    let(:options) { { cost: 4 } }
+
+    subject { described_class.new(algorithm: :bcrypt, options: options) }
+
+    it 'validates the options' do
+      expect(MultiPassword::Strategies::BCrypt).to receive(:new)
+        .and_return(strategy)
+      expect(strategy).to receive(:validate_options).with(options)
+        .and_return(options)
+
+      subject
+    end
+  end
+
   describe '#create' do
     let(:options) { { cost: 12 } }
     let(:manager) { described_class.new(algorithm: algorithm, options: options) }
