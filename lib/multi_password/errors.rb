@@ -12,4 +12,10 @@ class MultiPassword
       super("Algorithm #{algorithm} is not registered. Try requiring 'multi_password/strategies/#{algorithm}'.")
     end
   end
+
+  class InvalidOptions < Error
+    def initialize(strategy, message)
+      super("Algorithm #{strategy} options: #{message}")
+    end
+  end
 end

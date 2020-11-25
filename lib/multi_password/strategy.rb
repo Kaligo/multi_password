@@ -17,5 +17,9 @@ class MultiPassword
     def verify(_password, _encrypted_password)
       raise MethodNotImplemented, 'verify'
     end
+
+    def validate_options(_options)
+      raise MethodNotImplemented, 'validate_options'
+    end
   end
 end
