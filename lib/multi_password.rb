@@ -33,7 +33,7 @@ class MultiPassword
 
   def initialize(algorithm: config.default_algorithm, options: config.default_options)
     @strategy = registers.fetch(algorithm).new
-    @options = options
+    @options = @strategy.validate_options(options)
   rescue KeyError
     raise AlgorithmNotRegistered.new(algorithm)
   end
