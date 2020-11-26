@@ -25,7 +25,7 @@ class MultiPassword
         end
 
         if !m_cost.is_a?(Integer) || m_cost < 1 || m_cost > 31
-          raise MultiPassword::InvalidOptions.new('argon2', 'm_cost must be an integer between 1 and 31')
+          raise InvalidOptions.new('argon2', 'm_cost must be an integer between 1 and 31')
         end
 
         options
