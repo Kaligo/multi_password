@@ -8,7 +8,12 @@ class MultiPassword
   extend Dry::Configurable
 
   setting :default_algorithm
-  setting :default_options, {}
+  setting :default_options do |value|
+    strategy = registers.fetch(config.default_algorithm).new
+    strategy.validate_options(value)
+  rescue KeyError
+    raise AlgorithmNotRegistered.new(strategy)
+  end
 
   @registers = Concurrent::Hash.new
 

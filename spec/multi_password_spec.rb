@@ -8,15 +8,29 @@ RSpec.describe MultiPassword do
   end
 
   describe '.configure' do
-    it 'can be configured' do
+    let(:strategy) { MultiPassword::Strategies::BCrypt.new }
+    let(:options) { { cost: 4 } }
+
+    subject do
       described_class.configure do |config|
-        config.default_algorithm = :scrypt
-        config.default_options = { key_len: 64 }
+        config.default_algorithm = :bcrypt
+        config.default_options = options
       end
+    end
+
+    before do
+      expect(MultiPassword::Strategies::BCrypt).to receive(:new)
+        .and_return(strategy)
+      expect(strategy).to receive(:validate_options).with(options)
+        .and_return(options)
+    end
+
+    it 'can be configured' do
+      subject
 
       config = described_class.config
-      expect(config.default_algorithm).to eq :scrypt
-      expect(config.default_options).to eq({ key_len: 64 })
+      expect(config.default_algorithm).to eq :bcrypt
+      expect(config.default_options).to eq({ cost: 4 })
     end
   end
 
