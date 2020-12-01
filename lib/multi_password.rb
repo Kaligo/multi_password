@@ -8,12 +8,7 @@ class MultiPassword
   extend Dry::Configurable
 
   setting :default_algorithm
-  setting :default_options do |value|
-    strategy = registers.fetch(config.default_algorithm).new
-    strategy.validate_options(value)
-  rescue KeyError
-    raise AlgorithmNotRegistered.new(strategy)
-  end
+  setting :default_options
 
   @registers = Concurrent::Hash.new
 
@@ -34,6 +29,14 @@ class MultiPassword
 
   def self.unregister(algorithm)
     registers.delete(algorithm)
+  end
+
+  def self.configure(&block)
+    super
+    strategy = registers.fetch(config.default_algorithm).new
+    strategy.validate_options(config.default_options)
+  rescue KeyError
+    raise AlgorithmNotRegistered.new(strategy)
   end
 
   def initialize(algorithm: config.default_algorithm, options: config.default_options)
