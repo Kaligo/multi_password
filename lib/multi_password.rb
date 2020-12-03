@@ -32,11 +32,9 @@ class MultiPassword
   end
 
   def self.configure(&block)
-    super
-    strategy = registers.fetch(config.default_algorithm).new
-    strategy.validate_options(config.default_options)
-  rescue KeyError
-    raise AlgorithmNotRegistered.new(strategy)
+    super.tap do
+      new(algorithm: config.default_algorithm, options: config.default_options)
+    end
   end
 
   def initialize(algorithm: config.default_algorithm, options: config.default_options)

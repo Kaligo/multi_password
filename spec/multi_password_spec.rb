@@ -18,13 +18,6 @@ RSpec.describe MultiPassword do
       end
     end
 
-    before do
-      expect(MultiPassword::Strategies::BCrypt).to receive(:new)
-        .and_return(strategy)
-      expect(strategy).to receive(:validate_options).with(options)
-        .and_return(options)
-    end
-
     it 'can be configured' do
       subject
 
