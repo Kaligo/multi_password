@@ -22,11 +22,11 @@ class MultiPassword
         t_cost = options[:t_cost]
         m_cost = options[:m_cost]
 
-        if !t_cost.is_a?(Integer) || t_cost < 1 || t_cost > 750
+        if t_cost && (!t_cost.is_a?(Integer) || t_cost < 1 || t_cost > 750)
           raise InvalidOptions.new('argon2', 't_cost must be an integer between 1 and 750')
         end
 
-        if !m_cost.is_a?(Integer) || m_cost < 1 || m_cost > 31
+        if m_cost && (!m_cost.is_a?(Integer) || m_cost < 1 || m_cost > 31)
           raise InvalidOptions.new('argon2', 'm_cost must be an integer between 1 and 31')
         end
 

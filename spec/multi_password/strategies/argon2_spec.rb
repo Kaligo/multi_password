@@ -28,7 +28,7 @@ RSpec.describe MultiPassword::Strategies::Argon2 do
       context 'when t_cost is invalid' do
         it 'raises error' do
           [5.5, 0, 751].each do |invalid_value|
-            options = { t_cost: invalid_value, m_cost: 4 }
+            options = { t_cost: invalid_value }
 
             expect { strategy.validate_options(options) }
               .to raise_error(MultiPassword::InvalidOptions, 'Algorithm argon2 options: t_cost must be an integer between 1 and 750')
@@ -39,7 +39,7 @@ RSpec.describe MultiPassword::Strategies::Argon2 do
       context 'when m_cost is invalid' do
         it 'raises error' do
           [5.5, 0, 32].each do |invalid_value|
-            options = { m_cost: invalid_value, t_cost: 1 }
+            options = { m_cost: invalid_value }
 
             expect { strategy.validate_options(options) }
               .to raise_error(MultiPassword::InvalidOptions, 'Algorithm argon2 options: m_cost must be an integer between 1 and 31')
