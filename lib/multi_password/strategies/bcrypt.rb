@@ -17,6 +17,8 @@ class MultiPassword
       end
 
       def validate_options(options)
+        return options if options.empty?
+
         cost = options[:cost]
 
         if !cost.is_a?(Integer) || cost < 4 || cost > 31

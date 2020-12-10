@@ -17,6 +17,8 @@ class MultiPassword
       end
 
       def validate_options(options)
+        return options if options.empty?
+
         key_len = options[:key_len]
         max_time = options[:max_time]
         max_mem = options[:max_mem]

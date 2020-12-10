@@ -17,6 +17,8 @@ class MultiPassword
       end
 
       def validate_options(options)
+        return options if options.empty?
+
         t_cost = options[:t_cost]
         m_cost = options[:m_cost]
 
