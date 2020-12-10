@@ -20,6 +20,7 @@ RSpec.describe MultiPassword::Strategies::Argon2 do
 
       it 'returns options' do
         expect(strategy.validate_options(options)).to eq(options)
+        expect(strategy.validate_options({})).to eq({})
       end
     end
 

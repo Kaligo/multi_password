@@ -20,6 +20,7 @@ RSpec.describe MultiPassword::Strategies::BCrypt do
 
       it 'returns options' do
         expect(strategy.validate_options(options)).to eq(options)
+        expect(strategy.validate_options({})).to eq({})
       end
     end
 
