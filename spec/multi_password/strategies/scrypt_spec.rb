@@ -44,7 +44,7 @@ RSpec.describe MultiPassword::Strategies::SCrypt do
             options = { max_time: invalid_value }
 
             expect { strategy.validate_options(options) }
-              .to raise_error(MultiPassword::InvalidOptions, 'Algorithm scrypt options: max_time must be an integer between 0 and 2')
+              .to raise_error(MultiPassword::InvalidOptions, 'Algorithm scrypt options: max_time must be a number between 0 and 2')
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe MultiPassword::Strategies::SCrypt do
             options = { max_mem: invalid_value }
 
             expect { strategy.validate_options(options) }
-              .to raise_error(MultiPassword::InvalidOptions, 'Algorithm scrypt options: max_mem must be a number between 0 and 256')
+              .to raise_error(MultiPassword::InvalidOptions, 'Algorithm scrypt options: max_mem must be an integer between 0 and 256')
           end
         end
       end

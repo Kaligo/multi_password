@@ -27,12 +27,12 @@ class MultiPassword
           raise InvalidOptions.new('scrypt', 'key_len must be an integer between 16 and 512')
         end
 
-        if max_time && (!max_time.is_a?(Integer) || max_time < 0 || max_time > 2)
-          raise InvalidOptions.new('scrypt', 'max_time must be an integer between 0 and 2')
+        if max_time && (!max_time.is_a?(Numeric) || max_time < 0 || max_time > 2)
+          raise InvalidOptions.new('scrypt', 'max_time must be a number between 0 and 2')
         end
 
-        if max_mem && (!max_mem.is_a?(Numeric) || max_mem < 0 || max_mem > 256)
-          raise InvalidOptions.new('scrypt', 'max_mem must be a number between 0 and 256')
+        if max_mem && (!max_mem.is_a?(Integer) || max_mem < 0 || max_mem > 256)
+          raise InvalidOptions.new('scrypt', 'max_mem must be an integer between 0 and 256')
         end
 
         options
