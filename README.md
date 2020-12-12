@@ -56,6 +56,9 @@ You can also specify algorithm and options on-the-fly:
 manager = MultiPassword.new(algorithm: :scrypt, options: { key_len: 64, max_time: 1 })
 ```
 
+**NOTE**: `MultiPassword` helps you validate the options when initializing the
+instance and configuration.
+
 ### Interface
 
 MultiPassword provides 2 methods: `create` for hashing password and `verify` for
