@@ -1,3 +1,7 @@
+# 0.1.2
+
+- Fix bug when validating cost options
+
 # 0.1.1
 
 - Validate cost options for all algorithms
