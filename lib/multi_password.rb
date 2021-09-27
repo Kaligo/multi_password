@@ -8,7 +8,7 @@ class MultiPassword
   extend Dry::Configurable
 
   setting :default_algorithm
-  setting :default_options, {}
+  setting :default_options, default: {}
 
   @registers = Concurrent::Hash.new
 
